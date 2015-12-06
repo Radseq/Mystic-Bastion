@@ -31,7 +31,8 @@ public class NormalMappingRenderer {
 		shader.stop();
 	}
 
-	public void render(Map<TexturedModel, List<Entity>> entities, Vector4f clipPlane, List<Light> lights, Camera camera) {
+	public void render(Map<TexturedModel, List<Entity>> entities, Vector4f clipPlane, List<Light> lights,
+			Camera camera) {
 		shader.start();
 		prepare(clipPlane, lights, camera);
 		for (TexturedModel model : entities.keySet()) {
@@ -45,8 +46,8 @@ public class NormalMappingRenderer {
 		}
 		shader.stop();
 	}
-	
-	public void cleanUp(){
+
+	public void cleanUp() {
 		shader.cleanUp();
 	}
 
@@ -87,10 +88,10 @@ public class NormalMappingRenderer {
 
 	private void prepare(Vector4f clipPlane, List<Light> lights, Camera camera) {
 		shader.loadClipPlane(clipPlane);
-		//need to be public variables in MasterRenderer
+		// need to be public variables in MasterRenderer
 		shader.loadSkyColour(MasterRenderer.RED, MasterRenderer.GREEN, MasterRenderer.BLUE);
 		Matrix4f viewMatrix = Maths.createViewMatrix(camera);
-		
+
 		shader.loadLights(lights, viewMatrix);
 		shader.loadViewMatrix(viewMatrix);
 	}
