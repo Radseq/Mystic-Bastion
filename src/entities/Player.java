@@ -1,10 +1,9 @@
 package entities;
 
-import models.TexturedModel;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
+import models.TexturedModel;
 import renderEngine.DisplayManager;
 import terrains.Terrain;
 
@@ -26,7 +25,7 @@ public class Player extends Entity {
 
 	private boolean isInAir = false;
 
-	public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, int id) {
+	public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		super(model, position, rotX, rotY, rotZ, scale);
 	}
 

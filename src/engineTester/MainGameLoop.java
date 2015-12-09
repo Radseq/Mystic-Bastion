@@ -187,7 +187,7 @@ public class MainGameLoop {
 		TexturedModel stanfordBunny = new TexturedModel(bunnyModel,
 				new ModelTexture(loader.loadTexture("playerTexture")));
 
-		Player player = new Player(stanfordBunny, new Vector3f(75, 5, -75), 0, 100, 0, 0.6f, 2);
+		Player player = new Player(stanfordBunny, new Vector3f(75, 5, -75), 0, 100, 0, 0.6f);
 		entities.add(player);
 		Camera camera = new Camera(player);
 		List<GuiTexture> guiTextures = new ArrayList<GuiTexture>();
