@@ -135,7 +135,7 @@ public class World implements Runnable {
 				new ModelTexture(loader.loadTexture("pine")));
 
 		List<Terrain> terrains = new ArrayList<Terrain>();
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", true);
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", false);
 		Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap, "heightmap", true);
 
 		terrains.add(terrain);
