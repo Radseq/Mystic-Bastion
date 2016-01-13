@@ -18,6 +18,11 @@ public class PacketDisconnect extends Packet {
 	}
 
 	@Override
+	public byte[] getData() {
+		return ("01" + this.userName).getBytes();
+	}
+
+	@Override
 	public void writeData(GameClient client) {
 		client.sendData(getData());
 	}
@@ -25,11 +30,6 @@ public class PacketDisconnect extends Packet {
 	@Override
 	public void writeData(GameServer server) {
 		server.sendDataToAllClients(getData());
-	}
-
-	@Override
-	public byte[] getData() {
-		return ("01" + this.userName).getBytes();
 	}
 
 	public String getUsername() {

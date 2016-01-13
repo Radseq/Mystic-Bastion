@@ -89,12 +89,7 @@ public class GameServer extends Thread {
 				}
 				alreadyConnected = true;
 			} else {
-				// relay to the current connected player that there is a new
-				// player
 				sendData(packet.getData(), multiPlayer.ipAddress, multiPlayer.port);
-
-				// relay to the new player that the currently connect player
-				// exists
 
 				PacketLogin packetCurrentPlayer = new PacketLogin(multiPlayer.getEntityName(),
 						multiPlayer.getPositionX(), multiPlayer.getPositionY(), multiPlayer.getPositionZ(),
@@ -111,6 +106,18 @@ public class GameServer extends Thread {
 	public void removeConnection(PacketDisconnect packet) {
 		this.connectedPlayers.remove(getMultiPlayerIndex(packet.getUsername()));
 		packet.writeData(this);
+	}
+
+	private void handleMove(PacketMove packet) {
+		if (getMultiPlayer(packet.getUsername()) != null) {
+			// int index = getMultiPlayerIndex(packet.getUsername());
+			// MultiPlayer player = this.connectedPlayers.get(index);
+			// player.setPositionX(packet.getX());
+			// player.setPositionY(packet.getY());
+			// player.setPositionZ(packet.getZ());
+			// player.setRotY(packet.getAngle());
+			packet.writeData(this);
+		}
 	}
 
 	public MultiPlayer getMultiPlayer(String username) {
@@ -148,17 +155,4 @@ public class GameServer extends Thread {
 			sendData(data, multiPlayer.ipAddress, multiPlayer.port);
 		}
 	}
-
-	private void handleMove(PacketMove packet) {
-		if (getMultiPlayer(packet.getUsername()) != null) {
-			// int index = getMultiPlayerIndex(packet.getUsername());
-			// MultiPlayer player = this.connectedPlayers.get(index);
-			// player.setPositionX(packet.getX());
-			// player.setPositionY(packet.getY());
-			// player.setPositionZ(packet.getZ());
-			// player.setRotY(packet.getAngle());
-			packet.writeData(this);
-		}
-	}
-
 }

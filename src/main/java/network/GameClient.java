@@ -72,15 +72,6 @@ public class GameClient extends Thread {
 		}
 	}
 
-	public void sendData(byte[] data) {
-		DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, port);
-		try {
-			socket.send(packet);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private void handleLogin(PacketLogin packet, InetAddress address, int port) {
 		System.out.println(
 				"[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername() + " has joined the game...");
@@ -94,5 +85,14 @@ public class GameClient extends Thread {
 	private void handleMove(PacketMove packet) {
 		this.world.level.movePlayer(packet.getUsername(), packet.getX(), packet.getY(), packet.getZ(),
 				packet.getAngle());
+	}
+
+	public void sendData(byte[] data) {
+		DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, port);
+		try {
+			socket.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

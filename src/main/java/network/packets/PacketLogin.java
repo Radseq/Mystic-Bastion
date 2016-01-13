@@ -17,7 +17,6 @@ public class PacketLogin extends Packet {
 		this.posY = Float.parseFloat(dataArray[2]);
 		this.posZ = Float.parseFloat(dataArray[3]);
 		this.scale = Float.parseFloat(dataArray[4]);
-
 	}
 
 	public PacketLogin(String username, float x, float y, float z, float scale) {
@@ -30,6 +29,12 @@ public class PacketLogin extends Packet {
 	}
 
 	@Override
+	public byte[] getData() {
+		return ("00" + this.userName + "@" + this.posX + "@" + this.posY + "@" + this.posZ + "@" + this.scale)
+				.getBytes();
+	}
+
+	@Override
 	public void writeData(GameClient client) {
 		client.sendData(getData());
 	}
@@ -37,12 +42,6 @@ public class PacketLogin extends Packet {
 	@Override
 	public void writeData(GameServer server) {
 		server.sendDataToAllClients(getData());
-	}
-
-	@Override
-	public byte[] getData() {
-		return ("00" + this.userName + "@" + this.posX + "@" + this.posY + "@" + this.posZ + "@" + this.scale)
-				.getBytes();
 	}
 
 	public String getUsername() {

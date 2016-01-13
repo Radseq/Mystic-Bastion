@@ -10,12 +10,12 @@ public abstract class Packet {
 
 		private int packetId;
 
-		private PacketTypes(int packetId) {
-			this.packetId = packetId;
-		}
-
 		public int getId() {
 			return packetId;
+		}
+
+		private PacketTypes(int packetId) {
+			this.packetId = packetId;
 		}
 	}
 
@@ -23,6 +23,15 @@ public abstract class Packet {
 
 	public Packet(int packetId) {
 		this.packetId = (byte) packetId;
+	}
+
+	public static PacketTypes lookUpPacket(int id) {
+		for (PacketTypes packetTypes : PacketTypes.values()) {
+			if (packetTypes.getId() == id) {
+				return packetTypes;
+			}
+		}
+		return PacketTypes.INVALID;
 	}
 
 	public String readData(byte[] data) {
@@ -36,15 +45,6 @@ public abstract class Packet {
 		} catch (NumberFormatException e) {
 			return PacketTypes.INVALID;
 		}
-	}
-
-	public static PacketTypes lookUpPacket(int id) {
-		for (PacketTypes packetTypes : PacketTypes.values()) {
-			if (packetTypes.getId() == id) {
-				return packetTypes;
-			}
-		}
-		return PacketTypes.INVALID;
 	}
 
 	public abstract void writeData(GameClient client);
