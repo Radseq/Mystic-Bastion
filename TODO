@@ -1,0 +1,8 @@
+TODO:
+	Separate game server and game client
+	GUI
+	Buttons
+	sounds
+	collision detection
+	generate world, entities using MausePicker and save them to file
+	load entities from generate file
