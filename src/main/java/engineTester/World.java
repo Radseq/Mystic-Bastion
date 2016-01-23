@@ -316,38 +316,12 @@ public class World implements Runnable {
 
 		lights.add(sun);
 		// add light to lamps
-<<<<<<< HEAD:src/engineTester/MainGameLoop.java
-		lights.add(new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0, 0), new Vector3f(1, 0.01f, 0.02f)));
-		lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2, 2), new Vector3f(1, 0.01f, 0.02f)));
-		lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2, 0), new Vector3f(1, 0.01f, 0.02f)));
-
-		RawModel bunnyModel = OBJLoader.loadObjModel("person", loader);
-		TexturedModel stanfordBunny = new TexturedModel(bunnyModel,
-				new ModelTexture(loader.loadTexture("playerTexture")));
-
-		Player player = new Player(stanfordBunny, new Vector3f(75, 5, -75), 0, 100, 0, 0.6f);
-		entities.add(player);
-		Camera camera = new Camera(player);
-		List<GuiTexture> guiTextures = new ArrayList<GuiTexture>();
-		GuiRenderer guiRenderer = new GuiRenderer(loader);
-		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrain);
-
-		// **********Water Renderer Set-up************************
-
-		WaterFrameBuffers buffers = new WaterFrameBuffers();
-		WaterShader waterShader = new WaterShader();
-		WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix(), buffers);
-		List<WaterTile> waters = new ArrayList<WaterTile>();
-		WaterTile water = new WaterTile(75, -75, 0);
-		waters.add(water);
-=======
 		// lights.add(new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0,
 		// 0), new Vector3f(1, 0.01f, 0.02f)));
 		// lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2,
 		// 2), new Vector3f(1, 0.01f, 0.02f)));
 		// lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2,
 		// 0), new Vector3f(1, 0.01f, 0.02f)));
->>>>>>> multiPlayer:src/main/java/engineTester/World.java
 
 		// waters.add(water);
 
