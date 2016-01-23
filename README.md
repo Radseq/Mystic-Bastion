@@ -1,9 +1,4 @@
 # Mystic-Bastion
-<<<<<<< HEAD
-Some Jave game by following:
-* [ThinMatrix](https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ)
-* [OpenGL 3D Game Tutorial](https://www.youtube.com/playlist?list=PLRIWtICgwaX0u7Rf9zkZhLoLuZVfUksDP)
-=======
 Make Sure you installed tortoiseGit then 
 copy this link:
 https://github.com/Radseq/Mystic-Bastion.git
@@ -25,4 +20,3 @@ in eclipse go to src -> engineTester -> MainGameLoop. java and press run(green b
 
 To run generate heightMaps from 37 tut type true in:
 138 line of world.java
->>>>>>> multiPlayer
