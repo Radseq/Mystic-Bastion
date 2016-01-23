@@ -5,4 +5,6 @@ TODO:
 	sounds
 	collision detection
 	generate world, entities using MausePicker and save them to file
-	load entities from generate file
+	load entities from generated file
+	make response sql menager, to load all characters/npc/monsters form sql
+	make battle system

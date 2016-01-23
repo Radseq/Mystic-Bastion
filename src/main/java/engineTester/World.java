@@ -135,6 +135,7 @@ public class World implements Runnable {
 				new ModelTexture(loader.loadTexture("pine")));
 
 		List<Terrain> terrains = new ArrayList<Terrain>();
+		// true false at end of terrain constructor means generate random height
 		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", false);
 		Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap, "heightmap", true);
 
@@ -163,14 +164,11 @@ public class World implements Runnable {
 		Entity en3 = new Entity(crateModel, 65, 10, -75, 0, 0, 0, 0.04f);
 
 		// add lamps
-		Entity lamp1 = new Entity(lamp, 185, -4.7f, -293, 0, 0, 0, 1);
-		Entity lamp2 = new Entity(lamp, 370, 4.2f, -300, 0, 0, 0, 1);
-		Entity lamp3 = new Entity(lamp, 293, -6.8f, -305, 0, 0, 0, 1);
+		// Entity lamp1 = new Entity(lamp, 185, -4.7f, -293, 0, 0, 0, 1);
+		// Entity lamp2 = new Entity(lamp, 370, 4.2f, -300, 0, 0, 0, 1);
+		// Entity lamp3 = new Entity(lamp, 293, -6.8f, -305, 0, 0, 0, 1);
 
 		lamp.getTexture().setUseFakeLighting(true);
-		level.addEntity(lamp1);
-		level.addEntity(lamp2);
-		level.addEntity(lamp3);
 
 		List<Light> lights = new ArrayList<Light>();
 		Light sun = new Light(new Vector3f(10000, 10000, -10000), new Vector3f(1.3f, 1.3f, 1.3f));
@@ -205,7 +203,12 @@ public class World implements Runnable {
 		WaterShader waterShader = new WaterShader();
 		WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix(), buffers);
 		List<WaterTile> waters = new ArrayList<WaterTile>();
-		WaterTile water = new WaterTile(75, -75, 0);
+		// 7x7 squares
+		for (int i = 1; i < 7; i++) {
+			for (int j = 1; j < 7; j++) {
+				waters.add(new WaterTile(i * 100, -j * 100, -1));
+			}
+		}
 
 		// **********Water Renderer END************************
 
@@ -257,34 +260,55 @@ public class World implements Runnable {
 		normalMapEntities.add(en2);
 		normalMapEntities.add(en3);
 
-		for (int i = 0; i < 60; i++) {
+		// Random random = new Random(5666778);
+		for (int i = 0; i < 320; i++) {
 			if (i % 3 == 0) {
-				float x = random.nextFloat() * 150;
-				float z = random.nextFloat() * -150;
-				if ((x > 50 && x < 100) || (z < -50 && z > -100)) {
-				} else {
-					float y = terrain.getHeightOfTerrain(x, z);
+				float x = random.nextFloat() * 800;
+				float z = random.nextFloat() * -800;
 
-					Entity ferns = new Entity(fern, random.nextInt(4), x, y, z, 0, random.nextFloat() * 360, 0, 0.9f);
-
-					level.addEntity(ferns);
-
+				float y = terrain.getHeightOfTerrain(x, z);
+				if (y > 0) {
+					level.addEntity(new Entity(fern, 3, x, y, z, 0, random.nextFloat() * 360, 0, 0.9f));
 				}
 			}
-			if (i % 2 == 0) {
 
-				float x = random.nextFloat() * 150;
-				float z = random.nextFloat() * -150;
+			if (i % 10 == 0) {
+				float x = random.nextFloat() * 800;
+				float z = random.nextFloat() * -800;
+
+				float y = terrain.getHeightOfTerrain(x, z);
+				if (y > 0) {
+					level.addEntity(new Entity(lamp, x, y, z, 0, 0, 0, 1));
+					// lights.add(new Light(new Vector3f(x, y + 10, z),
+					// new Vector3f(random.nextInt(), random.nextInt(),
+					// random.nextInt()),
+					// new Vector3f(1, 0.01f, 0.02f)));
+				}
+			}
+
+			if (i % 1 == 0) {
+				float x = random.nextFloat() * 800;
+				float z = random.nextFloat() * -800;
 				if ((x > 50 && x < 100) || (z < -50 && z > -100)) {
 
 				} else {
 					float y = terrain.getHeightOfTerrain(x, z);
-					Entity boobble = new Entity(bobble, 1, x, y, z, 0, random.nextFloat() * 360, 0,
-							random.nextFloat() * 0.6f + 0.8f);
-					level.addEntity(boobble);
+					if (y > 0) {
+						level.addEntity(new Entity(bobble, 1, x, y, z, 0, random.nextFloat() * 360, 0,
+								random.nextFloat() * 0.6f + 0.8f));
+					}
 				}
 			}
 		}
+		for (int i = 0; i < 30; i++) {
+			float x = 400 + random.nextFloat() * 200;
+			float z = -400 + random.nextFloat() * 200;
+
+			float y = terrain.getHeightOfTerrain(x, z);
+			normalMapEntities
+					.add(new Entity(boulderModel, x, y, z, random.nextFloat() * 360, 0, 0, 0.5f + random.nextFloat()));
+		}
+
 		Entity rock = new Entity(rocks, 75, 4.6f, -75, 0, 0, 0, 75);
 		level.addEntity(rock);
 
@@ -292,11 +316,14 @@ public class World implements Runnable {
 
 		lights.add(sun);
 		// add light to lamps
-		lights.add(new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0, 0), new Vector3f(1, 0.01f, 0.02f)));
-		lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2, 2), new Vector3f(1, 0.01f, 0.02f)));
-		lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2, 0), new Vector3f(1, 0.01f, 0.02f)));
+		// lights.add(new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0,
+		// 0), new Vector3f(1, 0.01f, 0.02f)));
+		// lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2,
+		// 2), new Vector3f(1, 0.01f, 0.02f)));
+		// lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2,
+		// 0), new Vector3f(1, 0.01f, 0.02f)));
 
-		waters.add(water);
+		// waters.add(water);
 
 		// **********Particle Renderer Set-up************************
 		system.randomizeRotation();
@@ -361,18 +388,18 @@ public class World implements Runnable {
 
 			// render reflection texture
 			buffers.bindReflectionFrameBuffer();
-			float distance = 2 * (camera.getPosition().y - water.getHeight());
+			float distance = 2 * (camera.getPosition().y - waters.get(0).getHeight()); // water.getHeight()
 			camera.getPosition().y -= distance;
 			camera.invertPitch();
 			renderer.renderScene(level.getEntities(), normalMapEntities, terrains, lights, camera,
-					new Vector4f(0, 1, 0, -water.getHeight() + 1));
+					new Vector4f(0, 1, 0, -waters.get(0).getHeight() + 1)); // -water.getHeight()
 			camera.getPosition().y += distance;
 			camera.invertPitch();
 
 			// render refraction texture
 			buffers.bindRefractionFrameBuffer();
 			renderer.renderScene(level.getEntities(), normalMapEntities, terrains, lights, camera,
-					new Vector4f(0, -1, 0, water.getHeight()));
+					new Vector4f(0, -1, 0, waters.get(0).getHeight() + 0.2f)); // water.getHeight()
 
 			// render to screen
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
