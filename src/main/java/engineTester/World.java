@@ -137,7 +137,8 @@ public class World implements Runnable {
 		List<Terrain> terrains = new ArrayList<Terrain>();
 		// true false at end of terrain constructor means generate random height
 		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", false);
-		Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap, "heightmap", true);
+		// Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap,
+		// "heightmap", true); not used for now
 
 		terrains.add(terrain);
 		// terrains.add(terrain2);
