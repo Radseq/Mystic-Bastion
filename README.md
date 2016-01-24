@@ -20,3 +20,20 @@ in eclipse go to src -> engineTester -> MainGameLoop. java and press run(green b
 
 To run generate heightMaps from 37 tut type true in:
 138 line of world.java
+
+### Bugs
+
+Have found a bug? Please create an issue in our [bug tracker](https://github.com/Radseq/Mystic-Bastion/issues)
+
+### Contributing
+
+You can make pull requests of any improvement, see [Contributing Wiki Page](https://github.com/Radseq/Mystic-Bastion/graphs/contributors).
+
+### Contact
+
+no for now
+
+### License
+
+This repository is made available under the MIT License, means that you are free
+to do whatever you want, commercial, non-commercial, closed or open.
