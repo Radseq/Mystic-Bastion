@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mb</groupId>
-	<artifactId>Mystic-Bastion</artifactId>
+	<artifactId>Mystic-Bastion-Server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Mystic Bastion</name>
-	<description>some game</description>
+	<name>Mystic Bastion Server</name>
+	<description>Server for Mystic Bastion</description>
 	<properties>
 		<finalName>${project.artifactId}-${project.version}.jar</finalName>
-		<main.class>engineTester.MainGameLoop</main.class>
+		<main.class>engineTester.GameServer</main.class>
 		<natives>${basedir}/lib/natives-win</natives>
 		<release.natives>natives/</release.natives>
 	</properties>
@@ -78,26 +78,7 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>org.lwjgl.lwjgl</groupId>
-            <artifactId>lwjgl</artifactId>
-            <version>2.9.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.lwjgl.lwjgl</groupId>
-            <artifactId>lwjgl_util</artifactId>
-            <version>2.9.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.l33tlabs.twl</groupId>
-            <artifactId>pngdecoder</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slick2d</groupId>
-            <artifactId>slick2d-core</artifactId>
-            <version>1.0.1</version>
-        </dependency>
+
     </dependencies>
 
 </project>

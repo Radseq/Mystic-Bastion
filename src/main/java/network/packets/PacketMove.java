@@ -1,6 +1,5 @@
 package network.packets;
 
-import network.GameClient;
 import network.GameServer;
 
 public class PacketMove extends Packet {
@@ -25,11 +24,6 @@ public class PacketMove extends Packet {
 		this.posY = y;
 		this.posZ = z;
 		this.angle = angle;
-	}
-
-	@Override
-	public void writeData(GameClient client) {
-		client.sendData(getData());
 	}
 
 	@Override

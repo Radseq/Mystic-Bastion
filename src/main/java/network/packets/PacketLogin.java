@@ -1,6 +1,5 @@
 package network.packets;
 
-import network.GameClient;
 import network.GameServer;
 
 public class PacketLogin extends Packet {
@@ -32,11 +31,6 @@ public class PacketLogin extends Packet {
 	public byte[] getData() {
 		return ("00" + this.userName + "@" + this.posX + "@" + this.posY + "@" + this.posZ + "@" + this.scale)
 				.getBytes();
-	}
-
-	@Override
-	public void writeData(GameClient client) {
-		client.sendData(getData());
 	}
 
 	@Override

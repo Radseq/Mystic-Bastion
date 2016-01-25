@@ -1,6 +1,5 @@
 package network.packets;
 
-import network.GameClient;
 import network.GameServer;
 
 public class PacketDisconnect extends Packet {
@@ -20,11 +19,6 @@ public class PacketDisconnect extends Packet {
 	@Override
 	public byte[] getData() {
 		return ("01" + this.userName).getBytes();
-	}
-
-	@Override
-	public void writeData(GameClient client) {
-		client.sendData(getData());
 	}
 
 	@Override

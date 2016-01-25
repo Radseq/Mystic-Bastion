@@ -8,7 +8,6 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-import engineTester.World;
 import entities.MultiPlayer;
 import network.packets.Packet;
 import network.packets.Packet.PacketTypes;
@@ -20,10 +19,8 @@ public class GameServer extends Thread {
 
 	private DatagramSocket socket;
 	private List<MultiPlayer> connectedPlayers = new ArrayList<MultiPlayer>();
-	World world;
 
-	public GameServer(World game, int port) {
-		// world = game;
+	public GameServer(int port) {
 		try {
 			this.socket = new DatagramSocket(port);
 		} catch (SocketException e) {
@@ -57,12 +54,8 @@ public class GameServer extends Thread {
 			System.out.println("[" + address.getHostAddress() + ":" + port + "] " + ((PacketLogin) packet).getUsername()
 					+ " has connected...");
 
-			// total waste of time here: 2 weeks...
-			// first because of opengl content
-			// Secondly because of infinity pos of player -> instead of null
-			// in player texture, i used world.stanfordBunny
-			MultiPlayer player = new MultiPlayer(null, 75, 5, -75, 0, 100, 0, 0.6f,
-					((PacketLogin) packet).getUsername(), address, port);
+			MultiPlayer player = new MultiPlayer(75, 5, -75, 0, 100, 0, 0.6f, ((PacketLogin) packet).getUsername(),
+					address, port);
 			this.addConnection(player, (PacketLogin) packet);
 			break;
 		case DISCONNECT:
