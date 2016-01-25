@@ -12,9 +12,11 @@ public class ServerMain {
 	public static GameServer socketServer;
 
 	public static void main(String[] args) {
+
 		System.out.println("Will host on " + getIp() + ":" + SERVER_PORT);
 		socketServer = new GameServer(SERVER_PORT);
 		socketServer.start();
+
 	}
 
 	public static String getIp() {
