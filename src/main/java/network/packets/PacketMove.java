@@ -1,7 +1,6 @@
 package network.packets;
 
 import network.GameClient;
-import network.GameServer;
 
 public class PacketMove extends Packet {
 
@@ -30,11 +29,6 @@ public class PacketMove extends Packet {
 	@Override
 	public void writeData(GameClient client) {
 		client.sendData(getData());
-	}
-
-	@Override
-	public void writeData(GameServer server) {
-		server.sendDataToAllClients(getData());
 	}
 
 	@Override

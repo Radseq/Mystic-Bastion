@@ -1,7 +1,6 @@
 package network.packets;
 
 import network.GameClient;
-import network.GameServer;
 
 public class PacketLogin extends Packet {
 
@@ -37,11 +36,6 @@ public class PacketLogin extends Packet {
 	@Override
 	public void writeData(GameClient client) {
 		client.sendData(getData());
-	}
-
-	@Override
-	public void writeData(GameServer server) {
-		server.sendDataToAllClients(getData());
 	}
 
 	public String getUsername() {

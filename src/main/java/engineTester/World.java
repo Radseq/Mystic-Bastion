@@ -29,7 +29,6 @@ import guis.GuiTexture;
 import models.RawModel;
 import models.TexturedModel;
 import network.GameClient;
-import network.GameServer;
 import network.packets.PacketDisconnect;
 import network.packets.PacketLogin;
 import normalMappingObjConverter.NormalMappedObjLoader;
@@ -66,7 +65,6 @@ public class World implements Runnable {
 
 	private final int SERVER_PORT = 2323;
 	public GameClient socketClient;
-	public GameServer socketServer;
 
 	public TexturedModel stanfordBunny;
 
@@ -78,11 +76,6 @@ public class World implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 
-		if (isHost) {
-			System.out.println("Will host on " + getIp() + ":" + SERVER_PORT);
-			socketServer = new GameServer(this, SERVER_PORT);
-			socketServer.start();
-		}
 		System.out.println("Will join to " + getIp() + ":" + SERVER_PORT);
 		socketClient = new GameClient(this, "localhost", SERVER_PORT);
 		socketClient.start();
@@ -183,9 +176,7 @@ public class World implements Runnable {
 
 		PacketLogin loginPacket = new PacketLogin(player.getEntityName(), player.getPositionX(), player.getPositionY(),
 				player.getPositionZ(), player.getScale());
-		if (socketServer != null) {
-			socketServer.addConnection((MultiPlayer) player, loginPacket);
-		}
+
 		loginPacket.writeData(socketClient);
 		// *****************************************
 

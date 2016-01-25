@@ -1,7 +1,6 @@
 package network.packets;
 
 import network.GameClient;
-import network.GameServer;
 
 public abstract class Packet {
 
@@ -48,8 +47,6 @@ public abstract class Packet {
 	}
 
 	public abstract void writeData(GameClient client);
-
-	public abstract void writeData(GameServer server);
 
 	public abstract byte[] getData();
 }
