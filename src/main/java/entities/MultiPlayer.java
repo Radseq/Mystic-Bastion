@@ -2,7 +2,7 @@ package entities;
 
 import java.net.InetAddress;
 
-public class MultiPlayer extends Player {
+public class MultiPlayer extends Entity {
 
 	public InetAddress ipAddress;
 	public int port;

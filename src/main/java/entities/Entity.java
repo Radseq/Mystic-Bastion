@@ -6,7 +6,6 @@ public class Entity {
 	private float rotX, rotY, rotZ;
 	private float scale;
 
-	private int textureIndex = 0;
 	private String entityName;
 
 	private float positionX;
@@ -43,8 +42,6 @@ public class Entity {
 
 	public Entity(int index, float positionX, float positionY, float positionZ, float rotX, float rotY, float rotZ,
 			float scale) {
-		this.textureIndex = index;
-
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.positionZ = positionZ;
