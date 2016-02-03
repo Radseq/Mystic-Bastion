@@ -34,6 +34,5 @@
 	<classpathentry kind="lib" path="D:/eclipse_workspace/Mystic-Bastion/lib/jars/PNGDecoder.jar"/>
 	<classpathentry kind="lib" path="D:/eclipse_workspace/Mystic-Bastion/lib/jars/slick-util.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_71/lib/javaws.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
