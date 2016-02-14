@@ -61,10 +61,10 @@ public class Camera {
 		float theta = player.getRotY() + angleAroundPlayer;
 		float offsetX = (float) (horizDistance * Math.sin(Math.toRadians(theta)));
 		float offsetZ = (float) (horizDistance * Math.cos(Math.toRadians(theta)));
-		position.x = player.getPositionX() - offsetX;
-		position.z = player.getPositionZ() - offsetZ;
+		position.x = player.getPosition().x - offsetX;
+		position.z = player.getPosition().z - offsetZ;
 		// 6 value above means camera max zoom in will be on head
-		position.y = player.getPositionY() + verticDistance + 6;
+		position.y = player.getPosition().y + verticDistance + 6;
 	}
 
 	private float calculateHorizontalDistance() {

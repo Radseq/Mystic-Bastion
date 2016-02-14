@@ -1,10 +1,10 @@
 TODO:
-	Separate game server and game client
 	GUI
 	Buttons
 	sounds
 	collision detection
 	generate world, entities using MausePicker and save them to file
 	load entities from generated file
+	synchronize entity(should be in server side) with clients
 	make response sql menager, to load all characters/npc/monsters form sql
 	make battle system

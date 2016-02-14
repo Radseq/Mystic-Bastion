@@ -153,9 +153,9 @@ public class World implements Runnable {
 		TexturedModel boulderModel = new TexturedModel(NormalMappedObjLoader.loadOBJ("boulder", loader),
 				new ModelTexture(loader.loadTexture("boulder")));
 
-		Entity en1 = new Entity(barrelModel, 75, 10, -75, 0, 0, 0, 1f);
-		Entity en2 = new Entity(boulderModel, 85, 10, -75, 0, 0, 0, 1f);
-		Entity en3 = new Entity(crateModel, 65, 10, -75, 0, 0, 0, 0.04f);
+		Entity en1 = new Entity(barrelModel, new Vector3f(75, 10, -75), 0, 0, 0, 1f);
+		Entity en2 = new Entity(boulderModel, new Vector3f(85, 10, -75), 0, 0, 0, 1f);
+		Entity en3 = new Entity(crateModel, new Vector3f(65, 10, -75), 0, 0, 0, 0.04f);
 
 		// add lamps
 		// Entity lamp1 = new Entity(lamp, 185, -4.7f, -293, 0, 0, 0, 1);
@@ -175,8 +175,8 @@ public class World implements Runnable {
 		player = new MultiPlayer(stanfordBunny, 110, 5, -90, 0, 100, 0, 0.6f, "bob" + random.nextInt(400), null, -1);
 		level.addEntity(player);
 
-		PacketLogin loginPacket = new PacketLogin(player.getEntityName(), player.getPositionX(), player.getPositionY(),
-				player.getPositionZ(), player.getScale());
+		PacketLogin loginPacket = new PacketLogin(player.getEntityName(), player.getPosition().x,
+				player.getPosition().y, player.getPosition().z, player.getScale());
 
 		loginPacket.writeData(socketClient);
 		// *****************************************
@@ -260,7 +260,7 @@ public class World implements Runnable {
 
 				float y = terrain.getHeightOfTerrain(x, z);
 				if (y > 0) {
-					level.addEntity(new Entity(fern, 3, x, y, z, 0, random.nextFloat() * 360, 0, 0.9f));
+					level.addEntity(new Entity(fern, 3, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.9f));
 				}
 			}
 
@@ -270,7 +270,7 @@ public class World implements Runnable {
 
 				float y = terrain.getHeightOfTerrain(x, z);
 				if (y > 0) {
-					level.addEntity(new Entity(lamp, x, y, z, 0, 0, 0, 1));
+					level.addEntity(new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1));
 					// lights.add(new Light(new Vector3f(x, y + 10, z),
 					// new Vector3f(random.nextInt(), random.nextInt(),
 					// random.nextInt()),
@@ -286,7 +286,7 @@ public class World implements Runnable {
 				} else {
 					float y = terrain.getHeightOfTerrain(x, z);
 					if (y > 0) {
-						level.addEntity(new Entity(bobble, 1, x, y, z, 0, random.nextFloat() * 360, 0,
+						level.addEntity(new Entity(bobble, 1, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0,
 								random.nextFloat() * 0.6f + 0.8f));
 					}
 				}
@@ -297,11 +297,11 @@ public class World implements Runnable {
 			float z = -400 + random.nextFloat() * 200;
 
 			float y = terrain.getHeightOfTerrain(x, z);
-			normalMapEntities
-					.add(new Entity(boulderModel, x, y, z, random.nextFloat() * 360, 0, 0, 0.5f + random.nextFloat()));
+			normalMapEntities.add(new Entity(boulderModel, new Vector3f(x, y, z), random.nextFloat() * 360, 0, 0,
+					0.5f + random.nextFloat()));
 		}
 
-		Entity rock = new Entity(rocks, 75, 4.6f, -75, 0, 0, 0, 75);
+		Entity rock = new Entity(rocks, new Vector3f(75, 4.6f, -75), 0, 0, 0, 75);
 		level.addEntity(rock);
 
 		// *******************OTHER SETUP***************
@@ -362,7 +362,7 @@ public class World implements Runnable {
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_Y)) {
 				system.generateParticles(
-						new Vector3f(player.getPositionX(), player.getPositionY(), player.getPositionZ()));
+						new Vector3f(player.getPosition().x, player.getPosition().y, player.getPosition().z));
 				system.generateParticles(new Vector3f(160, 10, -280));// in
 																		// location
 

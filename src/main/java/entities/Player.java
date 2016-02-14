@@ -1,6 +1,7 @@
 package entities;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector3f;
 
 import engineTester.World;
 import models.TexturedModel;
@@ -33,7 +34,7 @@ public class Player extends Entity {
 
 	public Player(TexturedModel model, float positionX, float positionY, float positionZ, float rotX, float rotY,
 			float rotZ, float scale, String entityName) {
-		super(model, positionX, positionY, positionZ, rotX, rotY, rotZ, scale, entityName);
+		super(model, new Vector3f(positionX, positionY, positionZ), rotX, rotY, rotZ, scale, entityName);
 		// soundManager.load(soundName, false, 0.6f); // load a sound (true =
 		// looping,false = play once, and volume from 0 to 1)
 	}
@@ -49,34 +50,18 @@ public class Player extends Entity {
 		upwardsSpeed += GRAVITY * DisplayManager.getFrameTimeSeconds();
 		float a = upwardsSpeed * DisplayManager.getFrameTimeSeconds();
 		super.increasePosition(0, a, 0);
-		float terrainHeight = terrain.getHeightOfTerrain(getPositionX(), getPositionZ());
-		if (super.getPositionY() < terrainHeight) {
+		float terrainHeight = terrain.getHeightOfTerrain(getPosition().x, getPosition().z);
+		if (super.getPosition().y < terrainHeight) {
 			upwardsSpeed = 0;
 			isInAir = false;
-			super.setPositionY(terrainHeight);
+			super.getPosition().y = terrainHeight;
 		}
-		float y = super.getPositionY();
+		float y = super.getPosition().y;
 		if (dx != 0 || y != 0 || dz != 0 || b != 0) {
-			PacketMove packet = new PacketMove(this.getEntityName(), this.getPositionX(), this.getPositionY(),
-					this.getPositionZ(), this.getRotY());
+			PacketMove packet = new PacketMove(this.getEntityName(), this.getPosition().x, this.getPosition().y,
+					this.getPosition().z, this.getRotY());
 			packet.writeData(World.world.socketClient);
 		}
-
-		// float a = soundManager.getLength();
-		// if (distance == 0) {
-		// soundManager.stop();
-		// } else {
-		// new java.util.Timer().schedule(new java.util.TimerTask() {
-		// @Override
-		// public void run() {
-		// count = 0;
-		// }
-		// }, (long) a);
-		// if (count == 0) {
-		// soundManager.play(soundName);
-		// }
-		// count = 1;
-		// }
 
 	}
 

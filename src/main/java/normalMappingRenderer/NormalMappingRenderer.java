@@ -80,8 +80,13 @@ public class NormalMappingRenderer {
 	}
 
 	private void prepareInstance(Entity entity) {
-		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPositionX(), entity.getPositionY(),
-				entity.getPositionZ(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
+		// Matrix4f transformationMatrix =
+		// Maths.createTransformationMatrix(entity.getPositionX(),
+		// entity.getPositionY(),
+		// entity.getPositionZ(), entity.getRotX(), entity.getRotY(),
+		// entity.getRotZ(), entity.getScale());
+		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(),
+				entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);
 		shader.loadOffset(entity.getTextureXOffset(), entity.getTextureYOffset());
 	}

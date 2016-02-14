@@ -1,29 +1,31 @@
 package entities;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import models.TexturedModel;
 
 public class Entity {
 
 	private TexturedModel model;
-	// private Vector3f position;
+	private Vector3f position;
 	private float rotX, rotY, rotZ;
 	private float scale;
 
 	private int textureIndex = 0;
 	private String entityName;
 
-	private float positionX;
-	private float positionY;
-	private float positionZ;
+	// private float positionX;
+	// private float positionY;
+	// private float positionZ;
 
 	// private List<Entity> entities = new ArrayList<Entity>();
 
-	public Entity(TexturedModel model, float positionX, float positionY, float positionZ, float rotX, float rotY,
-			float rotZ, float scale) {
+	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		this.model = model;
-		this.positionX = positionX;
-		this.positionY = positionY;
-		this.positionZ = positionZ;
+		// this.positionX = positionX;
+		// this.positionY = positionY;
+		// this.positionZ = positionZ;
+		this.position = position;
 		// this.position = new Vector3f(positionX, positionY, positionZ);
 		this.rotX = rotX;
 		this.rotY = rotY;
@@ -31,13 +33,14 @@ public class Entity {
 		this.scale = scale;
 	}
 
-	public Entity(TexturedModel model, float positionX, float positionY, float positionZ, float rotX, float rotY,
-			float rotZ, float scale, String entityName) {
+	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale,
+			String entityName) {
 		this.model = model;
-		this.positionX = positionX;
-		this.positionY = positionY;
-		this.positionZ = positionZ;
+		// this.positionX = positionX;
+		// this.positionY = positionY;
+		// this.positionZ = positionZ;
 		// this.position = new Vector3f(positionX, positionY, positionZ);
+		this.position = position;
 		this.rotX = rotX;
 		this.rotY = rotY;
 		this.rotZ = rotZ;
@@ -45,14 +48,13 @@ public class Entity {
 		this.entityName = entityName;
 	}
 
-	public Entity(TexturedModel model, int index, float positionX, float positionY, float positionZ, float rotX,
-			float rotY, float rotZ, float scale) {
+	public Entity(TexturedModel model, int index, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		this.textureIndex = index;
 		this.model = model;
-		this.positionX = positionX;
-		this.positionY = positionY;
-		this.positionZ = positionZ;
-
+		// this.positionX = positionX;
+		// this.positionY = positionY;
+		// this.positionZ = positionZ;
+		this.position = position;
 		// this.position = new Vector3f(positionX, positionY, positionZ);
 		this.rotX = rotX;
 		this.rotY = rotY;
@@ -71,9 +73,12 @@ public class Entity {
 	}
 
 	public void increasePosition(float dx, float dy, float dz) {
-		this.positionX += dx;
-		this.positionY += dy;
-		this.positionZ += dz;
+		// this.positionX += dx;
+		// this.positionY += dy;
+		// this.positionZ += dz;
+		this.position.x += dx;
+		this.position.y += dy;
+		this.position.z += dz;
 	}
 
 	public void increaseRotation(float dx, float dy, float dz) {
@@ -88,6 +93,14 @@ public class Entity {
 
 	public void setModel(TexturedModel model) {
 		this.model = model;
+	}
+
+	public Vector3f getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector3f position) {
+		this.position = position;
 	}
 
 	public float getRotX() {
@@ -125,29 +138,18 @@ public class Entity {
 	public String getEntityName() {
 		return entityName;
 	}
-
-	public float getPositionX() {
-		return positionX;
-	}
-
-	public void setPositionX(float positionX) {
-		this.positionX = positionX;
-	}
-
-	public float getPositionY() {
-		return positionY;
-	}
-
-	public void setPositionY(float positionY) {
-		this.positionY = positionY;
-	}
-
-	public float getPositionZ() {
-		return positionZ;
-	}
-
-	public void setPositionZ(float positionZ) {
-		this.positionZ = positionZ;
-	}
+	/*
+	 * public float getPositionX() { return positionX; }
+	 * 
+	 * public void setPositionX(float positionX) { this.positionX = positionX; }
+	 * 
+	 * public float getPositionY() { return positionY; }
+	 * 
+	 * public void setPositionY(float positionY) { this.positionY = positionY; }
+	 * 
+	 * public float getPositionZ() { return positionZ; }
+	 * 
+	 * public void setPositionZ(float positionZ) { this.positionZ = positionZ; }
+	 */
 
 }
