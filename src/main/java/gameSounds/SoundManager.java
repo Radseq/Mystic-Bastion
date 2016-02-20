@@ -17,6 +17,8 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
 
+import engineTester.World;
+
 public class SoundManager {
 	// Global stores for the sounds:
 	private HashMap<String, IntBuffer> buffersMap; // (name, buffer) pairs
@@ -60,7 +62,12 @@ public class SoundManager {
 	// Position and orientate the listener:
 	private void initListener() {
 		// Set the listener's initial position:
-		listenerPosition = BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f });
+		World world = new World();
+
+		float x = world.player.getPosition().x;
+		float y = world.player.getPosition().y;
+		float z = world.player.getPosition().z;
+		listenerPosition = BufferUtils.createFloatBuffer(3).put(new float[] { x, y, z });
 		listenerPosition.flip();
 
 		// Set the listener's initial orientation:

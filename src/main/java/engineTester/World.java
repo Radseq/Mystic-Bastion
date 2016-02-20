@@ -68,7 +68,7 @@ public class World implements Runnable {
 
 	public TexturedModel stanfordBunny;
 
-	private Player player;
+	public Player player;
 
 	public synchronized void start() {
 		running = true;
@@ -102,7 +102,14 @@ public class World implements Runnable {
 
 		Loader loader = new Loader();
 		TextMaster.init(loader);
-		MasterRenderer renderer = new MasterRenderer(loader);
+		RawModel bunnyModel = OBJLoader.loadObjModel("person", loader);
+		stanfordBunny = new TexturedModel(bunnyModel, new ModelTexture(loader.loadTexture("playerTexture")));
+		TexturedModel stanfordBunny = new TexturedModel(bunnyModel,
+				new ModelTexture(loader.loadTexture("playerTexture")));
+		player = new MultiPlayer(stanfordBunny, 110, 5, -90, 0, 100, 0, 0.6f, "bob" + random.nextInt(400), null, -1);
+
+		Camera camera = new Camera(player);
+		MasterRenderer renderer = new MasterRenderer(loader, camera);
 		ParticleMaster.init(loader, renderer.getProjectionMatrix());
 
 		// public static World world;
@@ -129,7 +136,7 @@ public class World implements Runnable {
 
 		List<Terrain> terrains = new ArrayList<Terrain>();
 		// true false at end of terrain constructor means generate random height
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", false);
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", true);
 		// Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap,
 		// "heightmap", true); not used for now
 
@@ -165,14 +172,10 @@ public class World implements Runnable {
 		lamp.getTexture().setUseFakeLighting(true);
 
 		List<Light> lights = new ArrayList<Light>();
-		Light sun = new Light(new Vector3f(10000, 10000, -10000), new Vector3f(1.3f, 1.3f, 1.3f));
+		Light sun = new Light(new Vector3f(1000000, 1500000, -1000000), new Vector3f(1.3f, 1.3f, 1.3f));
 
 		// ****************** Player ************************
-		RawModel bunnyModel = OBJLoader.loadObjModel("person", loader);
-		stanfordBunny = new TexturedModel(bunnyModel, new ModelTexture(loader.loadTexture("playerTexture")));
-		TexturedModel stanfordBunny = new TexturedModel(bunnyModel,
-				new ModelTexture(loader.loadTexture("playerTexture")));
-		player = new MultiPlayer(stanfordBunny, 110, 5, -90, 0, 100, 0, 0.6f, "bob" + random.nextInt(400), null, -1);
+
 		level.addEntity(player);
 
 		PacketLogin loginPacket = new PacketLogin(player.getEntityName(), player.getPosition().x,
@@ -184,9 +187,14 @@ public class World implements Runnable {
 		FontType font = new FontType(loader.loadTexture("candara"), new File("src/main/resources/candara.fnt"));
 		GUIText text = new GUIText(player.getEntityName(), 2f, font, new Vector2f(0f, 0.53f), 1f, true);
 
-		Camera camera = new Camera(player);
 		List<GuiTexture> guiTextures = new ArrayList<GuiTexture>();
+
+		GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f),
+				new Vector2f(0.5f, 0.5f));
+		// guiTextures.add(shadowMap);
+
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
+
 		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrain);
 
 		// **********Water Renderer Set-up************************
@@ -372,6 +380,8 @@ public class World implements Runnable {
 			}
 
 			ParticleMaster.update(camera);
+
+			renderer.renderShadowMap(level.getEntities(), sun);
 
 			en1.increaseRotation(0, 1, 0);
 			en2.increaseRotation(0, 1, 0);

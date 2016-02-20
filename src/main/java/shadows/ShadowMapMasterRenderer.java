@@ -24,7 +24,8 @@ import models.TexturedModel;
  */
 public class ShadowMapMasterRenderer {
 
-	private static final int SHADOW_MAP_SIZE = 2048;
+	private static final int SHADOW_MAP_SIZE = 4096;// increase resolution of
+													// shadow
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
@@ -176,8 +177,7 @@ public class ShadowMapMasterRenderer {
 		Matrix4f.rotate(pitch, new Vector3f(1, 0, 0), lightViewMatrix, lightViewMatrix);
 		float yaw = (float) Math.toDegrees(((float) Math.atan(direction.x / direction.z)));
 		yaw = direction.z > 0 ? yaw - 180 : yaw;
-		Matrix4f.rotate((float) -Math.toRadians(yaw), new Vector3f(0, 1, 0), lightViewMatrix,
-				lightViewMatrix);
+		Matrix4f.rotate((float) -Math.toRadians(yaw), new Vector3f(0, 1, 0), lightViewMatrix, lightViewMatrix);
 		Matrix4f.translate(center, lightViewMatrix, lightViewMatrix);
 	}
 
@@ -206,7 +206,8 @@ public class ShadowMapMasterRenderer {
 	 * conversion is necessary to convert from one coordinate system to the
 	 * coordinate system that we can use to sample to shadow map.
 	 * 
-	 * @return The offset as a matrix (so that it's easy to apply to other matrices).
+	 * @return The offset as a matrix (so that it's easy to apply to other
+	 *         matrices).
 	 */
 	private static Matrix4f createOffset() {
 		Matrix4f offset = new Matrix4f();

@@ -22,9 +22,10 @@ public class Level {
 	public synchronized void addEntity(Entity entity) {
 		// this.getEntities().add(entity);
 		entities.add(entity);
-		if (entity.getEntityName() != null)
-			System.out.println(entity.getEntityName() + "   " + entity.getPosition().x + "   " + entity.getPosition().y
-					+ "   " + entity.getPosition().z);
+		// if (entity.getEntityName() != null)
+		// System.out.println(entity.getEntityName() + " " +
+		// entity.getPosition().x + " " + entity.getPosition().y
+		// + " " + entity.getPosition().z);
 	}
 
 	public synchronized void movePlayer(String username, float dx, float dy, float dz, float angle) {
