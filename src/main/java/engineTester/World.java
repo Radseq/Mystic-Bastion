@@ -112,8 +112,6 @@ public class World implements Runnable {
 		MasterRenderer renderer = new MasterRenderer(loader, camera);
 		ParticleMaster.init(loader, renderer.getProjectionMatrix());
 
-		// public static World world;
-
 		// *********TERRAIN TEXTURE STUFF**********
 
 		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy2"));
@@ -381,7 +379,7 @@ public class World implements Runnable {
 
 			ParticleMaster.update(camera);
 
-			renderer.renderShadowMap(level.getEntities(), sun);
+			renderer.renderShadowMap(level.getEntities(), normalMapEntities, sun);
 
 			en1.increaseRotation(0, 1, 0);
 			en2.increaseRotation(0, 1, 0);

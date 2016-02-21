@@ -5,6 +5,7 @@ in vec3 surfaceNormal;
 in vec3 toLightVector[4];
 in vec3 toCameraVector;
 in float visibility;
+in vec4 shadowCoords;
 
 out vec4 out_Color;
 
@@ -14,10 +15,18 @@ uniform vec3 attenuation[4];
 uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 skyColour;
+uniform sampler2D shadowMap;
 
 void main(void){
 
 	//GLSL language
+
+	float objectNearestLight = texture(shadowMap,shadowCoords.xy).r;
+	float lightFactor = 1.0;
+	if(shadowCoords.z > objectNearestLight){
+		lightFactor = 1.0 - 0.4;
+	}
+
 
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitVectorToCamera = normalize(toCameraVector);
@@ -39,10 +48,10 @@ void main(void){
 		totalDiffuse = totalDiffuse + (brightness * lightColour[i])/attFactor;
 		totalSpecular = totalSpecular + (dampedFactor * reflectivity * lightColour[i])/attFactor;
 	}
-	totalDiffuse = max(totalDiffuse, 0.2);
+	totalDiffuse = max(totalDiffuse, 0.4) * lightFactor;
 	
 	vec4 textureColour = texture(modelTexture,pass_textureCoordinates);
-	if(textureColour.a<0.5){
+	if(textureColour.a < 0.5){
 		discard;
 	}
 

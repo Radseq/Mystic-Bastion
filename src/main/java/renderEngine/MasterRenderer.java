@@ -84,7 +84,7 @@ public class MasterRenderer {
 		shader.loadSkyColour(RED, GREEN, BLUE);
 		shader.loadLights(lights);
 		shader.loadViewMatrix(camera);
-		renderer.render(entities);
+		renderer.render(entities, shadowMapRenderer.getToShadowMapSpaceMatrix());
 		shader.stop();
 		normalMapRenderer.render(normalMapEntities, clipPlane, lights, camera);
 		terrainShader.start();
@@ -137,10 +137,21 @@ public class MasterRenderer {
 		}
 	}
 
-	public void renderShadowMap(List<Entity> entityList, Light sun) {
+	/*
+	 * public void renderShadowMap(List<Entity> entityList, Light sun) { for
+	 * (Entity entity : entityList) { processEntity(entity); }
+	 * shadowMapRenderer.render(entities, sun); entities.clear(); }
+	 */
+
+	public void renderShadowMap(List<Entity> entityList, List<Entity> normalMappedEntities, Light sun) {
 		for (Entity entity : entityList) {
 			processEntity(entity);
 		}
+		for (Entity entity : normalMappedEntities) {
+			processEntity(entity);
+		}
+		shadowMapRenderer.render(normalMapEntities, sun);
+		normalMapEntities.clear();
 		shadowMapRenderer.render(entities, sun);
 		entities.clear();
 	}
