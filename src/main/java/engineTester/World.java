@@ -278,8 +278,9 @@ public class World implements Runnable {
 				float y = terrain.getHeightOfTerrain(x, z);
 				if (y > 0) {
 					level.addEntity(new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1));
-					lights.add(new Light(new Vector3f(x, y + 13, z), new Vector3f(29, 42, 53),
-							new Vector3f(1, 0.01f, 0.02f)));
+					// lights.add(new Light(new Vector3f(x, y + 13, z), new
+					// Vector3f(29, 42, 53),
+					// new Vector3f(1, 0.01f, 0.02f)));
 				}
 			}
 

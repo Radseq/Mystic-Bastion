@@ -13,6 +13,7 @@ import toolbox.Maths;
 public class TerrainShader extends ShaderProgram {
 
 	private static final int MAX_LIGHTS = 4;
+
 	private static final String VERTEX_FILE = "src/main/java/shaders/terrainVertexShader.txt";
 	private static final String FRAGMENT_FILE = "src/main/java/shaders/terrainFragmentShader.txt";
 
