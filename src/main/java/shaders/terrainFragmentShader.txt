@@ -22,13 +22,14 @@ uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 skyColour;
 
+uniform float shadowMapSize;
+
 const int pcfCount = 2;
 const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
 void main(void){
 
-	float mapSize = 2048.0;//should be load as uniform variable
-	float texelSize = 1.0 / mapSize;
+	float texelSize = 1.0 / shadowMapSize;
 	float total = 0.0;
 	
 	for (int x=-pcfCount; x<=pcfCount; x++){

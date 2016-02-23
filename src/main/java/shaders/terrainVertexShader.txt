@@ -19,9 +19,9 @@ uniform vec3 lightPosition[4];
 
 const float density = 0.0035; //0.007 for some fog // 0 turns off fog
 const float gradient = 5.0;  //1.5 for some fog 
-const float shadowDistance = 100.0; //the same value like in ShadowBox => SHADOW_DISTANCE
-//so TODO, load this as a uniform
-const float transitionDistance = 10.0;
+
+uniform float shadowDistance;
+uniform float shadowTransitionDistance;
 
 uniform vec4 plane;
 
@@ -47,8 +47,8 @@ void main(void){
 	visibility = exp(-pow((distance*density),gradient));
 	visibility = clamp(visibility,0.0,1.0);
 	
-	distance = distance - (shadowDistance - transitionDistance);
-	distance = distance / transitionDistance;
+	distance = distance - (shadowDistance - shadowTransitionDistance);
+	distance = distance / shadowTransitionDistance;
 	shadowCoords.w = clamp(1.0 - distance, 0.0, 1.0);
 	
 }
