@@ -18,7 +18,8 @@ import toolbox.Maths;
 
 public class Terrain {
 
-	private static final float SIZE = 800;
+	private float size = 800;
+	private float seaHeight;
 	private static final float MAX_HEIGHT = 40;
 	private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;
 	private int VERTEX_COUNT = 128;
@@ -37,11 +38,12 @@ public class Terrain {
 	private boolean randomGenHeight;
 
 	public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap,
-			String heightMap, boolean randomGenHeight) {
+			String heightMap, boolean randomGenHeight, int seaHeight) {
 		this.texturePack = texturePack;
 		this.blendMap = blendMap;
-		this.x = gridX * SIZE;
-		this.z = gridZ * SIZE;
+		this.x = gridX * size;
+		this.z = gridZ * size;
+		this.seaHeight = seaHeight;
 		this.randomGenHeight = randomGenHeight;
 		if (randomGenHeight) {
 			// gridX and gridZ mst be positive number, my gridZ and gridX is not
@@ -72,10 +74,14 @@ public class Terrain {
 		return blendMap;
 	}
 
+	public float getSize() {
+		return size;
+	}
+
 	public float getHeightOfTerrain(float worldX, float worldZ) {
 		float terrainX = worldX - this.x;
 		float terrainZ = worldZ - this.z;
-		float gridSquareSize = SIZE / ((float) heights.length - 1);
+		float gridSquareSize = size / ((float) heights.length - 1);
 		int gridX = (int) Math.floor(terrainX / gridSquareSize);
 		int gridZ = (int) Math.floor(terrainZ / gridSquareSize);
 
@@ -96,7 +102,8 @@ public class Terrain {
 					new Vector3f(1, heights[gridX + 1][gridZ + 1], 1), new Vector3f(0, heights[gridX][gridZ + 1], 1),
 					new Vector2f(xCoord, zCoord));
 		}
-
+		if (answer < seaHeight)
+			return seaHeight;
 		return answer;
 	}
 
@@ -126,14 +133,14 @@ public class Terrain {
 			for (int j = 0; j < VERTEX_COUNT; j++) {
 				float height = 0;
 				Vector3f normal;
-				vertices[vertexPointer * 3] = (float) j / ((float) VERTEX_COUNT - 1) * SIZE;
+				vertices[vertexPointer * 3] = (float) j / ((float) VERTEX_COUNT - 1) * size;
 				if (randomGenHeight)
 					height = getHeight(j, i, generator);
 				else
 					height = getHeight(j, i, image);
 				vertices[vertexPointer * 3 + 1] = height;
 				heights[j][i] = height;
-				vertices[vertexPointer * 3 + 2] = (float) i / ((float) VERTEX_COUNT - 1) * SIZE;
+				vertices[vertexPointer * 3 + 2] = (float) i / ((float) VERTEX_COUNT - 1) * size;
 				if (randomGenHeight)
 					normal = calculateNormal(j, i, generator);
 				else
@@ -197,5 +204,9 @@ public class Terrain {
 
 	private float getHeight(int x, int z, HeightsGenerator generator) {
 		return generator.generateHeight(x, z);
+	}
+
+	public float getSeaHeight() {
+		return seaHeight;
 	}
 }

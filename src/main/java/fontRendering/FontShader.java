@@ -46,7 +46,7 @@ public class FontShader extends ShaderProgram {
 	}
 
 	protected void loadTranslation(Vector2f translation) {
-		super.loadVector(location_translation, translation);
+		super.load2DVector(location_translation, translation);
 	}
 
 	public void loadTextDistanceField(float width, float edge) {
@@ -60,7 +60,7 @@ public class FontShader extends ShaderProgram {
 	}
 
 	protected void loadOffset(Vector2f offset) {
-		super.loadVector(location_offset, offset);
+		super.load2DVector(location_offset, offset);
 	}
 
 	protected void loadOutlineColour(Vector3f outlineColour) {

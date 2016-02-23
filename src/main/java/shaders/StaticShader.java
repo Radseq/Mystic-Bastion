@@ -58,7 +58,7 @@ public class StaticShader extends ShaderProgram {
 		location_offset = super.getUniformLocation("offset");
 		location_plane = super.getUniformLocation("plane");
 		location_toShadowMapSpace = super.getUniformLocation("toShadowMapSpace");
-		location_shadowMap = super.getUniformLocation("location_shadowMap");
+		location_shadowMap = super.getUniformLocation("shadowMap");
 
 		location_lightPosition = new int[MAX_LIGHTS];
 		location_lightColour = new int[MAX_LIGHTS];
@@ -87,7 +87,7 @@ public class StaticShader extends ShaderProgram {
 	}
 
 	public void loadOffset(float x, float y) {
-		super.loadVector(location_offset, new Vector2f(x, y));
+		super.load2DVector(location_offset, new Vector2f(x, y));
 	}
 
 	public void loadSkyColour(float r, float g, float b) {

@@ -134,7 +134,7 @@ public class World implements Runnable {
 
 		List<Terrain> terrains = new ArrayList<Terrain>();
 		// true false at end of terrain constructor means generate random height
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", true);
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap2", true, -5);
 		// Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap,
 		// "heightmap", true); not used for now
 
@@ -161,6 +161,7 @@ public class World implements Runnable {
 		Entity en1 = new Entity(barrelModel, new Vector3f(75, 10, -75), 0, 0, 0, 1f);
 		Entity en2 = new Entity(boulderModel, new Vector3f(85, 10, -75), 0, 0, 0, 1f);
 		Entity en3 = new Entity(crateModel, new Vector3f(65, 10, -75), 0, 0, 0, 0.04f);
+		Entity rock = new Entity(rocks, new Vector3f(90, 10, -75), 0, 0, 0, 1f);
 
 		// add lamps
 		// Entity lamp1 = new Entity(lamp, 185, -4.7f, -293, 0, 0, 0, 1);
@@ -187,8 +188,9 @@ public class World implements Runnable {
 
 		List<GuiTexture> guiTextures = new ArrayList<GuiTexture>();
 
-		GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f),
-				new Vector2f(0.5f, 0.5f));
+		// GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(),
+		// new Vector2f(0.5f, 0.5f),
+		// new Vector2f(0.5f, 0.5f));
 		// guiTextures.add(shadowMap);
 
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
@@ -204,14 +206,11 @@ public class World implements Runnable {
 		// 7x7 squares
 		for (int i = 1; i < 7; i++) {
 			for (int j = 1; j < 7; j++) {
-				waters.add(new WaterTile(i * 100, -j * 100, -1));
+				waters.add(new WaterTile(i * 100, -j * 100, terrain.getSeaHeight(), (int) terrain.getSize() / 12));
 			}
 		}
 
 		// **********Water Renderer END************************
-
-		ParticleTexture particleTexture = new ParticleTexture(loader.loadTexture("particleAtlas"), 4, true);
-		ParticleSystem system = new ParticleSystem(particleTexture, 50, 25, 0.3f, 4, 1);
 
 		text.setColour(1, 0, 0);
 		text.setDistanceFieldWidth(0.5f);
@@ -257,6 +256,7 @@ public class World implements Runnable {
 		normalMapEntities.add(en1);
 		normalMapEntities.add(en2);
 		normalMapEntities.add(en3);
+		// normalMapEntities.add(rock);
 
 		// Random random = new Random(5666778);
 		for (int i = 0; i < 320; i++) {
@@ -266,21 +266,20 @@ public class World implements Runnable {
 
 				float y = terrain.getHeightOfTerrain(x, z);
 				if (y > 0) {
-					level.addEntity(new Entity(fern, 3, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.9f));
+					level.addEntity(new Entity(fern, random.nextInt(3), new Vector3f(x, y, z), 0,
+							random.nextFloat() * 360, 0, 0.9f));
 				}
 			}
 
-			if (i % 10 == 0) {
+			if (i % 30 == 0) {
 				float x = random.nextFloat() * 800;
 				float z = random.nextFloat() * -800;
 
 				float y = terrain.getHeightOfTerrain(x, z);
 				if (y > 0) {
 					level.addEntity(new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1));
-					// lights.add(new Light(new Vector3f(x, y + 10, z),
-					// new Vector3f(random.nextInt(), random.nextInt(),
-					// random.nextInt()),
-					// new Vector3f(1, 0.01f, 0.02f)));
+					lights.add(new Light(new Vector3f(x, y + 13, z), new Vector3f(29, 42, 53),
+							new Vector3f(1, 0.01f, 0.02f)));
 				}
 			}
 
@@ -307,9 +306,6 @@ public class World implements Runnable {
 					0.5f + random.nextFloat()));
 		}
 
-		Entity rock = new Entity(rocks, new Vector3f(75, 4.6f, -75), 0, 0, 0, 75);
-		level.addEntity(rock);
-
 		// *******************OTHER SETUP***************
 
 		lights.add(sun);
@@ -324,11 +320,31 @@ public class World implements Runnable {
 		// waters.add(water);
 
 		// **********Particle Renderer Set-up************************
+		ParticleTexture particleTexture = new ParticleTexture(loader.loadTexture("particleAtlas"), 4, true);
+		ParticleSystem system = new ParticleSystem(particleTexture, 50, 25, 0.3f, 4, 1);
 		system.randomizeRotation();
 		system.setDirection(new Vector3f(0, 1, 0), 0.1f);
 		system.setLifeError(0.1f);
 		system.setSpeedError(0.4f);
 		system.setScaleError(0.8f);
+
+		// Fire
+		ParticleTexture fireTexture = new ParticleTexture(loader.loadTexture("fire"), 8, true);
+		ParticleSystem fireSystem = new ParticleSystem(fireTexture, 400, 10, 0.1f, 3, 1f);
+		fireSystem.setDirection(new Vector3f(0, 3, 0), 0.1f);
+		fireSystem.setLifeError(0.2f);
+		fireSystem.setSpeedError(0.6f);
+		fireSystem.setScaleError(1f);
+		fireSystem.randomizeRotation();
+
+		// Cosmic
+		ParticleTexture cosmicTexture = new ParticleTexture(loader.loadTexture("cosmic"), 4, true);
+		ParticleSystem cosmicSystem = new ParticleSystem(cosmicTexture, 200, 10, 0.1f, 4, 2f);
+		cosmicSystem.setDirection(new Vector3f(0, 2, 0), 0.1f);
+		cosmicSystem.setLifeError(0.2f);
+		cosmicSystem.setSpeedError(0.6f);
+		cosmicSystem.setScaleError(1f);
+		cosmicSystem.randomizeRotation();
 
 		// ****************Game Loop Below*********************
 
@@ -369,6 +385,10 @@ public class World implements Runnable {
 			if (Keyboard.isKeyDown(Keyboard.KEY_Y)) {
 				system.generateParticles(
 						new Vector3f(player.getPosition().x, player.getPosition().y, player.getPosition().z));
+				cosmicSystem.generateParticles(
+						new Vector3f(player.getPosition().x, player.getPosition().y, player.getPosition().z));
+				fireSystem.generateParticles(
+						new Vector3f(player.getPosition().x, player.getPosition().y, player.getPosition().z));
 				system.generateParticles(new Vector3f(160, 10, -280));// in
 																		// location
 
@@ -379,7 +399,7 @@ public class World implements Runnable {
 
 			ParticleMaster.update(camera);
 
-			renderer.renderShadowMap(level.getEntities(), normalMapEntities, sun);
+			renderer.renderShadowMap(level.getEntities(), sun);
 
 			en1.increaseRotation(0, 1, 0);
 			en2.increaseRotation(0, 1, 0);

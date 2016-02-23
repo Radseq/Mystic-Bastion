@@ -1,10 +1,9 @@
 package models;
 
-public class RawModel {
-
 /*
 RawModel represent a 3D model stored in memory
 */
+public class RawModel {
 
 	private int vaoID;
 	private int vertexCount;
