@@ -25,10 +25,8 @@ import models.TexturedModel;
  */
 public class ShadowMapMasterRenderer {
 
-	public static final int SHADOW_MAP_SIZE = Settings.SHADOW_MAP_SIZE;// increase
-																		// resolution
-																		// of
-	// shadow
+	// increase resolution of shadow
+	public static final int SHADOW_MAP_SIZE = Settings.SHADOW_MAP_SIZE;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
