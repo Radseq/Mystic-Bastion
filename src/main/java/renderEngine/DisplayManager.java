@@ -9,27 +9,20 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.PixelFormat;
 
-public class DisplayManager {
+import engineTester.Settings;
 
-	private static final int WIDTH = 800; // 1280
-	private static final int HEIGHT = 600; // 720
-	private static final int FPS_CAP = 60;
-	// Whether to use fullscreen mode
-	public static final boolean FULLSCREEN = false; // added to future support
-													// of options screen
+public class DisplayManager {
 
 	private static long lastFrameTime;
 	private static float delta;
 	public final static String WINDOWNAME = "Mystic Bastion!";
-	// Whether to enable VSync in hardware.
-	public static final boolean VSYNC = false; // added to future support of
-												// options screen
+
 	// frames per second
 	static int fps;
-	static boolean SHOWFPS = false;
+	static boolean SHOWFPS = Settings.SHOW_FPS;
 	/** last fps time */
 	static long lastFPS;
-	static int fpsCountRefreshRate;
+	static int fpsCountRefreshRate = Settings.FPS_REFRESH_TIME;
 
 	public static void createDisplay() {
 		ContextAttribs attribs = new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true); // opengl
@@ -37,23 +30,30 @@ public class DisplayManager {
 
 		try {
 			Display.setResizable(true); // whether our window is resizable
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-			Display.setVSyncEnabled(VSYNC); // whether hardware VSync is enabled
-			Display.setFullscreen(FULLSCREEN); // whether fullscreen is enabled
-			Display.create(new PixelFormat(), attribs);
+			Display.setDisplayMode(new DisplayMode(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT));
+			Display.setVSyncEnabled(Settings.VSYNC); // whether hardware VSync
+														// is enabled
+			Display.setFullscreen(Settings.FULL_SCREEN); // whether fullscreen
+															// is
+															// enabled
+			if (Settings.ENABLE_ANTIALIASING) {
+				Display.create(new PixelFormat().withSamples(8).withDepthBits(24), attribs);
+				GL11.glEnable(GL13.GL_MULTISAMPLE);
+			} else {
+				Display.create(new PixelFormat(), attribs);
+			}
 			Display.setTitle(WINDOWNAME);
-			GL11.glEnable(GL13.GL_MULTISAMPLE);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 
-		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		GL11.glViewport(0, 0, Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT);
 		lastFrameTime = getCurrentTime();
 		lastFPS = lastFrameTime;
 	}
 
 	public static void updateDisplay() {
-		Display.sync(FPS_CAP);
+		Display.sync(Settings.FPS_CAP);
 		Display.update();
 		long currentFrameTime = getCurrentTime();
 		delta = (currentFrameTime - lastFrameTime) / 1000f;
@@ -61,10 +61,6 @@ public class DisplayManager {
 		if (SHOWFPS) {
 			updateFPS(); // update FPS Counter
 		}
-	}
-
-	public static boolean ShowFPS(boolean b) {
-		return SHOWFPS = b;
 	}
 
 	public static float getFrameTimeSeconds() {
@@ -89,9 +85,5 @@ public class DisplayManager {
 			lastFPS += 1000;
 		}
 		fps++;
-	}
-
-	public static int setFpsCountRefreshRate(int rate) {
-		return fpsCountRefreshRate = rate;
 	}
 }

@@ -21,7 +21,7 @@ Some Jave game by following:
 in eclipse go to src -> engineTester -> MainGameLoop.java and press run(green button with white arrow on top)
 
 To run generate heightMaps from 37 tut type true in:
-138 line of world.java
+134 line of world.java
 
 # Running(Multiplayer)
 

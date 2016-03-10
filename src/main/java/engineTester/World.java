@@ -59,8 +59,6 @@ public class World implements Runnable {
 
 	public static boolean running = false;
 
-	public boolean isHost;
-
 	public Level level = new Level();
 
 	private final int SERVER_PORT = 2323;
@@ -96,9 +94,8 @@ public class World implements Runnable {
 		world = this;
 		Random random = new Random((new Date()).getTime() % 5666778);
 
+		Settings.loadSettings();
 		DisplayManager.createDisplay();
-		DisplayManager.ShowFPS(false);
-		DisplayManager.setFpsCountRefreshRate(500);
 
 		Loader loader = new Loader();
 		TextMaster.init(loader);
@@ -134,7 +131,7 @@ public class World implements Runnable {
 
 		List<Terrain> terrains = new ArrayList<Terrain>();
 		// true false at end of terrain constructor means generate random height
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap2", true, -5);
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", false, -5);
 		// Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap,
 		// "heightmap", true); not used for now
 
@@ -257,7 +254,7 @@ public class World implements Runnable {
 		normalMapEntities.add(en2);
 		normalMapEntities.add(en3);
 		// normalMapEntities.add(rock);
-
+		int a = 3;
 		// Random random = new Random(5666778);
 		for (int i = 0; i < 320; i++) {
 			if (i % 3 == 0) {
@@ -278,9 +275,11 @@ public class World implements Runnable {
 				float y = terrain.getHeightOfTerrain(x, z);
 				if (y > 0) {
 					level.addEntity(new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1));
-					// lights.add(new Light(new Vector3f(x, y + 13, z), new
-					// Vector3f(29, 42, 53),
-					// new Vector3f(1, 0.01f, 0.02f)));
+					if (a < Settings.MAX_LIGHTS) {
+						// lights.add(new Light(new Vector3f(x, y + 13, z), new
+						// Vector3f(29, 42, 53),
+						// new Vector3f(1, 0.01f, 0.02f)));
+					}
 				}
 			}
 
@@ -453,10 +452,6 @@ public class World implements Runnable {
 		DisplayManager.closeDisplay();
 		// stop();
 		// thread.interrupt();
-		if (!isHost) {
-			// socketClient.interrupt();
-			this.stop();
-		}
 	}
 
 	public static String getIp() {

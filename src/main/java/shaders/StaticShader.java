@@ -7,13 +7,12 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engineTester.Settings;
 import entities.Camera;
 import entities.Light;
 import toolbox.Maths;
 
 public class StaticShader extends ShaderProgram {
-
-	private static final int MAX_LIGHTS = 4;
 
 	private static final String VERTEX_FILE = "src/main/java/shaders/vertexShader.txt";
 	private static final String FRAGMENT_FILE = "src/main/java/shaders/fragmentShader.txt";
@@ -60,10 +59,10 @@ public class StaticShader extends ShaderProgram {
 		location_toShadowMapSpace = super.getUniformLocation("toShadowMapSpace");
 		location_shadowMap = super.getUniformLocation("shadowMap");
 
-		location_lightPosition = new int[MAX_LIGHTS];
-		location_lightColour = new int[MAX_LIGHTS];
-		location_attenuation = new int[MAX_LIGHTS];
-		for (int i = 0; i < MAX_LIGHTS; i++) {
+		location_lightPosition = new int[Settings.MAX_LIGHTS];
+		location_lightColour = new int[Settings.MAX_LIGHTS];
+		location_attenuation = new int[Settings.MAX_LIGHTS];
+		for (int i = 0; i < Settings.MAX_LIGHTS; i++) {
 			location_lightPosition[i] = super.getUniformLocation("lightPosition[" + i + "]");
 			location_lightColour[i] = super.getUniformLocation("lightColour[" + i + "]");
 			location_attenuation[i] = super.getUniformLocation("attenuation[" + i + "]");
@@ -108,7 +107,7 @@ public class StaticShader extends ShaderProgram {
 	}
 
 	public void loadLights(List<Light> lights) {
-		for (int i = 0; i < MAX_LIGHTS; i++) {
+		for (int i = 0; i < Settings.MAX_LIGHTS; i++) {
 			if (i < lights.size()) {
 				super.loadVector(location_lightPosition[i], lights.get(i).getPosition());
 				super.loadVector(location_lightColour[i], lights.get(i).getColour());

@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engineTester.Settings;
 import entities.Camera;
 import renderEngine.MasterRenderer;
 
@@ -26,7 +27,7 @@ public class ShadowBox {
 	public static final float OFFSET = 15;
 	private static final Vector4f UP = new Vector4f(0, 1, 0, 0);
 	private static final Vector4f FORWARD = new Vector4f(0, 0, -1, 0);
-	public static final float SHADOW_DISTANCE = 100;
+	public static final float SHADOW_DISTANCE = Settings.SHADOW_RENDER_DISTANCE;
 
 	private float minX, maxX;
 	private float minY, maxY;

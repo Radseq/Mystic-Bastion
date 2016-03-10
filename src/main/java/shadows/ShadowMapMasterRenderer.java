@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engineTester.Settings;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -24,8 +25,10 @@ import models.TexturedModel;
  */
 public class ShadowMapMasterRenderer {
 
-	public static final int SHADOW_MAP_SIZE = 4096;// increase resolution of
-													// shadow
+	public static final int SHADOW_MAP_SIZE = Settings.SHADOW_MAP_SIZE;// increase
+																		// resolution
+																		// of
+	// shadow
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
