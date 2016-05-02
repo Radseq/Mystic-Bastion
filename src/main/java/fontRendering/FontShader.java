@@ -3,12 +3,13 @@ package fontRendering;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engineTester.MainGameLoop;
 import shaders.ShaderProgram;
 
 public class FontShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "src/main/java/fontRendering/fontVertex.txt";
-	private static final String FRAGMENT_FILE = "src/main/java/fontRendering/fontFragment.txt";
+	private static final String VERTEX_FILE = MainGameLoop.fileManager.getShaderFile("fontVertex");
+	private static final String FRAGMENT_FILE = MainGameLoop.fileManager.getShaderFile("fontFragment");
 
 	private int location_colour;
 	private int location_translation;

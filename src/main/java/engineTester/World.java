@@ -2,6 +2,7 @@ package engineTester;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,6 +70,12 @@ public class World implements Runnable {
 	public Player player;
 
 	public synchronized void start() {
+		try {
+			MainGameLoop.fileManager.loadNatives();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
 		running = true;
 
 		thread = new Thread(this);
@@ -89,7 +96,6 @@ public class World implements Runnable {
 		}
 	}
 
-	@Override
 	public void run() {
 		world = this;
 		Random random = new Random((new Date()).getTime() % 5666778);
@@ -180,7 +186,8 @@ public class World implements Runnable {
 		loginPacket.writeData(socketClient);
 		// *****************************************
 
-		FontType font = new FontType(loader.loadTexture("candara"), new File("src/main/resources/candara.fnt"));
+		FontType font = new FontType(loader.loadTexture("candara"),
+				new File(MainGameLoop.fileManager.getFontFile("candara")));
 		GUIText text = new GUIText(player.getEntityName(), 2f, font, new Vector2f(0f, 0.53f), 1f, true);
 
 		List<GuiTexture> guiTextures = new ArrayList<GuiTexture>();

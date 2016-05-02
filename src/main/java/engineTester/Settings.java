@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.util.Properties;
 
 import renderEngine.DisplayManager;
+import toolbox.FileManager;
 
 public class Settings {
 	// Game Settings
@@ -30,7 +31,7 @@ public class Settings {
 
 	public static boolean ENABLE_ANTIALIASING = true;
 
-	public static final String gameSettingPatch = "config/settings.cfg";
+	public static final String gameSettingPatch = FileManager.releasePath + "/config/settings.cfg";
 
 	public static void loadSettings() {
 
@@ -72,7 +73,7 @@ public class Settings {
 		OutputStream output = null;
 
 		try {
-			new File("config/").mkdir();
+			new File(FileManager.releasePath + "/config/").mkdir();
 			output = new FileOutputStream(gameSettingPatch);
 			output.write(DisplayManager.WINDOWNAME.getBytes(Charset.forName("UTF-8")));
 

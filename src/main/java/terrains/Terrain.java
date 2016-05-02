@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engineTester.MainGameLoop;
 import models.RawModel;
 import renderEngine.Loader;
 import textures.TerrainTexture;
@@ -113,7 +114,7 @@ public class Terrain {
 
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File("src/main/resources/" + heightMap + ".png"));
+			image = ImageIO.read(new File(MainGameLoop.fileManager.getTextureFile(heightMap)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

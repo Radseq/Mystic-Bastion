@@ -7,14 +7,15 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engineTester.MainGameLoop;
 import engineTester.Settings;
 import entities.Light;
 import shaders.ShaderProgram;
 
 public class NormalMappingShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "src/main/java/normalMappingRenderer/normalMapVShader.txt";
-	private static final String FRAGMENT_FILE = "src/main/java/normalMappingRenderer/normalMapFShader.txt";
+	private static final String VERTEX_FILE = MainGameLoop.fileManager.getShaderFile("normalMapVShader");
+	private static final String FRAGMENT_FILE = MainGameLoop.fileManager.getShaderFile("normalMapFShader");
 
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;

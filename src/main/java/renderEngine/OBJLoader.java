@@ -10,6 +10,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engineTester.MainGameLoop;
 import models.RawModel;
 
 public class OBJLoader {
@@ -17,7 +18,7 @@ public class OBJLoader {
 	public static RawModel loadObjModel(String fileName, Loader loader) {
 		FileReader fr = null;
 		try {
-			fr = new FileReader(new File("src/main/resources/" + fileName + ".obj"));
+			fr = new FileReader(new File(MainGameLoop.fileManager.getModelFile(fileName)));
 		} catch (FileNotFoundException e) {
 			System.err.println("Couldn't load file!");
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package skybox;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engineTester.MainGameLoop;
 import entities.Camera;
 import renderEngine.DisplayManager;
 import shaders.ShaderProgram;
@@ -10,8 +11,8 @@ import toolbox.Maths;
 
 public class SkyboxShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "src/main/java/skybox/skyboxVertexShader.txt";
-	private static final String FRAGMENT_FILE = "src/main/java/skybox/skyboxFragmentShader.txt";
+	private static final String VERTEX_FILE = MainGameLoop.fileManager.getShaderFile("skyboxVertexShader");
+	private static final String FRAGMENT_FILE = MainGameLoop.fileManager.getShaderFile("skyboxFragmentShader");
 
 	private static final float ROTATE_SPEED = 1f;
 

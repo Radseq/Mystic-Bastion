@@ -11,16 +11,15 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engineTester.MainGameLoop;
 import models.RawModel;
 import renderEngine.Loader;
 
 public class OBJFileLoader {
 
-	private static final String RES_LOC = "src/main/resources/";
-
 	public static RawModel loadOBJ(String objFileName, Loader loader) {
 		FileReader isr = null;
-		File objFile = new File(RES_LOC + objFileName + ".obj");
+		File objFile = new File(MainGameLoop.fileManager.getModelFile(objFileName));
 		try {
 			isr = new FileReader(objFile);
 		} catch (FileNotFoundException e) {

@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engineTester.MainGameLoop;
 import engineTester.Settings;
 import entities.Camera;
 import entities.Light;
@@ -14,8 +15,8 @@ import toolbox.Maths;
 
 public class StaticShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "src/main/java/shaders/vertexShader.txt";
-	private static final String FRAGMENT_FILE = "src/main/java/shaders/fragmentShader.txt";
+	private static final String VERTEX_FILE = MainGameLoop.fileManager.getShaderFile("vertexShader");
+	private static final String FRAGMENT_FILE = MainGameLoop.fileManager.getShaderFile("fragmentShader");
 
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;
