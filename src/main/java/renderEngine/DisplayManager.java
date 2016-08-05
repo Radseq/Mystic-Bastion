@@ -25,8 +25,7 @@ public class DisplayManager {
 	static int fpsCountRefreshRate = Settings.FPS_REFRESH_TIME;
 
 	public static void createDisplay() {
-		ContextAttribs attribs = new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true); // opengl
-																												// 3,2
+		ContextAttribs attribs = new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true);
 
 		try {
 			Display.setResizable(true); // whether our window is resizable
@@ -37,7 +36,8 @@ public class DisplayManager {
 															// is
 															// enabled
 			if (Settings.ENABLE_ANTIALIASING) {
-				Display.create(new PixelFormat().withSamples(8).withDepthBits(24), attribs);
+				Display.create(new PixelFormat().withDepthBits(24), attribs);
+				System.out.println(GL11.glGetInteger(GL11.GL_DEPTH_BITS));
 				GL11.glEnable(GL13.GL_MULTISAMPLE);
 			} else {
 				Display.create(new PixelFormat(), attribs);

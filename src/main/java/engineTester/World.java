@@ -37,6 +37,8 @@ import objConverter.OBJFileLoader;
 import particles.ParticleMaster;
 import particles.ParticleSystem;
 import particles.ParticleTexture;
+import postProcessing.Fbo;
+import postProcessing.PostProcessing;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
@@ -132,9 +134,13 @@ public class World implements Runnable {
 
 		TexturedModel fern = new TexturedModel(OBJFileLoader.loadOBJ("fern", loader), fernTextureAtlas);
 
-		TexturedModel bobble = new TexturedModel(OBJFileLoader.loadOBJ("pine", loader),
-				new ModelTexture(loader.loadTexture("pine")));
-
+		TexturedModel tree = new TexturedModel(OBJFileLoader.loadOBJ("cherry", loader),
+				new ModelTexture(loader.loadTexture("cherry"))); //pine old
+		tree.getTexture().setHasTransparency(true);
+		tree.getTexture().setShineDamper(10);
+		tree.getTexture().setReflectivity(0.5f);
+		tree.getTexture().setSpecularMap(loader.loadTexture("cherryS"));
+		
 		List<Terrain> terrains = new ArrayList<Terrain>();
 		// true false at end of terrain constructor means generate random height
 		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap", false, -5);
@@ -146,9 +152,13 @@ public class World implements Runnable {
 		// *****************************************
 
 		// ******************NORMAL MAP MODELS************************
-
-		TexturedModel lamp = new TexturedModel(OBJLoader.loadObjModel("lamp", loader),
-				new ModelTexture(loader.loadTexture("lamp")));
+		//old is lamp
+		TexturedModel lamp = new TexturedModel(OBJLoader.loadObjModel("lantern", loader),
+				new ModelTexture(loader.loadTexture("lantern")));
+		//lamp.getTexture().setHasTransparency(true);
+		//lamp.getTexture().setShineDamper(10);
+		//lamp.getTexture().setReflectivity(0.5f);
+		lamp.getTexture().setSpecularMap(loader.loadTexture("lanternS"));
 
 		List<Entity> normalMapEntities = new ArrayList<Entity>();
 
@@ -231,7 +241,7 @@ public class World implements Runnable {
 		// const vec2 offset = vec2(0.006, 0.006);
 		// const vec3 outlineColour = vec3(1.0, 0.0, 0.0);
 
-		bobble.getTexture().setHasTransparency(true);
+		tree.getTexture().setHasTransparency(true);
 
 		fern.getTexture().setHasTransparency(true);
 
@@ -246,6 +256,7 @@ public class World implements Runnable {
 		barrelModel.getTexture().setNormalMap(loader.loadTexture("barrelNormal"));
 		barrelModel.getTexture().setShineDamper(10);
 		barrelModel.getTexture().setReflectivity(0.5f);
+		barrelModel.getTexture().setSpecularMap(loader.loadTexture("barrelS"));
 
 		crateModel.getTexture().setNormalMap(loader.loadTexture("crateNormal"));
 		crateModel.getTexture().setShineDamper(10);
@@ -298,8 +309,8 @@ public class World implements Runnable {
 				} else {
 					float y = terrain.getHeightOfTerrain(x, z);
 					if (y > 0) {
-						level.addEntity(new Entity(bobble, 1, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0,
-								random.nextFloat() * 0.6f + 0.8f));
+						level.addEntity(new Entity(tree, 1, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0,
+								random.nextFloat() * 1.3f + 0.8f));
 					}
 				}
 			}
@@ -353,6 +364,10 @@ public class World implements Runnable {
 		cosmicSystem.setScaleError(1f);
 		cosmicSystem.randomizeRotation();
 
+		Fbo multisapleFbo = new Fbo(Display.getWidth(), Display.getHeight());
+		Fbo outputFbo = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_TEXTURE);
+		PostProcessing.init(loader);
+				
 		// ****************Game Loop Below*********************
 
 		while (!Display.isCloseRequested()) { // && ended
@@ -431,12 +446,17 @@ public class World implements Runnable {
 			// render to screen
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 			buffers.unbindCurrentFrameBuffer();
+			
+			multisapleFbo.bindFrameBuffer();
 			renderer.renderScene(level.getEntities(), normalMapEntities, terrains, lights, camera,
 					new Vector4f(0, -1, 0, 100000));
 			waterRenderer.render(waters, camera, sun);
-
 			ParticleMaster.renderParticles(camera);
-
+			multisapleFbo.unbindFrameBuffer(); // we want screen/water/particle no gui
+			//multisapleFbo.resolveToFbo(outputFbo);
+			PostProcessing.doPostProcessing(multisapleFbo.getColourTexture());
+			
+			
 			guiRenderer.render(guiTextures);
 			TextMaster.render();
 
@@ -449,6 +469,9 @@ public class World implements Runnable {
 			}
 		}
 		// *********Clean Up Below**************
+		PostProcessing.cleanUp();
+		outputFbo.cleanUp();
+		multisapleFbo.cleanUp();
 		ParticleMaster.cleanUp();
 		TextMaster.cleanUp();
 		buffers.cleanUp();
