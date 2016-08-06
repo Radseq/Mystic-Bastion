@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engineTester.Settings;
 import terrains.Terrain;
 import entities.Camera;
 
@@ -74,8 +75,8 @@ public class MousePicker {
 	}
 
 	private Vector2f getNormalisedDeviceCoordinates(float mouseX, float mouseY) {
-		float x = (2.0f * mouseX) / Display.getWidth() - 1f;
-		float y = (2.0f * mouseY) / Display.getHeight() - 1f;
+		float x = (2.0f * mouseX) / Settings.WINDOW_WIDTH - 1f;
+		float y = (2.0f * mouseY) / Settings.WINDOW_HEIGHT - 1f;
 		return new Vector2f(x, y);
 	}
 

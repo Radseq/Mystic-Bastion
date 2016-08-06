@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engineTester.Settings;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -179,7 +180,7 @@ public class MasterRenderer {
 	 */
 	private void createProjectionMatrix() {
 		projectionMatrix = new Matrix4f();
-		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
+		float aspectRatio = (float) Settings.WINDOW_WIDTH / (float) Settings.WINDOW_HEIGHT;
 		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))));
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = FAR_PLANE - NEAR_PLANE;

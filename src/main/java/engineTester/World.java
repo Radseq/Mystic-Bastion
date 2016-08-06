@@ -92,7 +92,10 @@ public class World implements Runnable {
 		running = false;
 
 		try {
+			//socketClient.join();
 			thread.join();
+			socketClient.stop();
+			thread.stop();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -100,10 +103,11 @@ public class World implements Runnable {
 
 	public void run() {
 		world = this;
-		Random random = new Random((new Date()).getTime() % 5666778);
 
 		Settings.loadSettings();
 		DisplayManager.createDisplay();
+		
+		Random random = new Random((new Date()).getTime() % 5666778);
 
 		Loader loader = new Loader();
 		TextMaster.init(loader);
@@ -364,8 +368,9 @@ public class World implements Runnable {
 		cosmicSystem.setScaleError(1f);
 		cosmicSystem.randomizeRotation();
 
-		Fbo multisapleFbo = new Fbo(Display.getWidth(), Display.getHeight());
-		Fbo outputFbo = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_TEXTURE);
+		Fbo multisapleFbo = new Fbo(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT);
+		Fbo outputFbo = new Fbo(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT, Fbo.DEPTH_TEXTURE);
+		Fbo outputFbo2 = new Fbo(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT, Fbo.DEPTH_TEXTURE);
 		PostProcessing.init(loader);
 				
 		// ****************Game Loop Below*********************
@@ -453,9 +458,11 @@ public class World implements Runnable {
 			waterRenderer.render(waters, camera, sun);
 			ParticleMaster.renderParticles(camera);
 			multisapleFbo.unbindFrameBuffer(); // we want screen/water/particle no gui
-			//multisapleFbo.resolveToFbo(outputFbo);
+			//for tut 48
+			//multisapleFbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT0, outputFbo);
+			//multisapleFbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT1, outputFbo2);
+			//PostProcessing.doPostProcessing(multisapleFbo.getColourTexture(), outputFbo2.getColourTexture());
 			PostProcessing.doPostProcessing(multisapleFbo.getColourTexture());
-			
 			
 			guiRenderer.render(guiTextures);
 			TextMaster.render();
@@ -471,6 +478,7 @@ public class World implements Runnable {
 		// *********Clean Up Below**************
 		PostProcessing.cleanUp();
 		outputFbo.cleanUp();
+		outputFbo2.cleanUp();
 		multisapleFbo.cleanUp();
 		ParticleMaster.cleanUp();
 		TextMaster.cleanUp();
@@ -482,6 +490,7 @@ public class World implements Runnable {
 		DisplayManager.closeDisplay();
 		// stop();
 		// thread.interrupt();
+		//this.stop();
 	}
 
 	public static String getIp() {

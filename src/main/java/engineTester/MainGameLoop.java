@@ -29,6 +29,7 @@ public class MainGameLoop {
 				world.start();
 			}
 		}
+//		world.stop();
 
 	}
 }

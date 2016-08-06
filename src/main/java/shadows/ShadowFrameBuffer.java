@@ -9,6 +9,8 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
 
+import engineTester.Settings;
+
 /**
  * The frame buffer for the shadow pass. This class sets up the depth texture
  * which can be rendered to during the shadow render pass, producing a shadow
@@ -59,7 +61,7 @@ public class ShadowFrameBuffer {
 	 */
 	protected void unbindFrameBuffer() {
 		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		GL11.glViewport(0, 0, Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT);
 	}
 
 	/**

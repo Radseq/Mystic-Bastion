@@ -8,6 +8,8 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
 
+import engineTester.Settings;
+
 public class WaterFrameBuffers {
 
 	protected static final int REFLECTION_WIDTH = 320;
@@ -50,7 +52,7 @@ public class WaterFrameBuffers {
 
 	public void unbindCurrentFrameBuffer() {// call after rendering to texture
 		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		GL11.glViewport(0, 0, Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT);
 	}
 
 	public int getReflectionTexture() {// get the resulting texture

@@ -7,7 +7,8 @@ in vec3 toCameraVector;
 in float visibility;
 in vec4 shadowCoords;
 
-out vec4 out_Color;
+layout (location = 0) out vec4 out_Color;
+layout (location = 1) out vec4 out_BrightColor;
 
 uniform sampler2D modelTexture;
 uniform sampler2D specularMap;
@@ -57,16 +58,18 @@ void main(void){
 		discard;
 	}
     
+    out_BrightColor = vec4(0.0);
     if(usesSpecularMap > 0.5){
         vec4 mapInfo = texture(specularMap, pass_textureCoordinates);
         totalSpecular *= mapInfo.r;
         if(mapInfo.g > 0.5){
+            out_BrightColor = textureColour + vec4(totalSpecular, 1.0);
             totalDiffuse = vec3(1);
         }
     }
 
-	out_Color =  vec4(totalDiffuse,1.0) * textureColour + vec4(totalSpecular,1.0);
-	out_Color = mix(vec4(skyColour,1.0),out_Color, visibility);
+	out_Color =  vec4(totalDiffuse, 1.0) * textureColour + vec4(totalSpecular, 1.0);
+	out_Color = mix(vec4(skyColour, 1.0), out_Color, visibility);
 	
 	//Fragment Shader
 	//executes one time every pixel that the objects comes on the screen each time it uses the output of vertex

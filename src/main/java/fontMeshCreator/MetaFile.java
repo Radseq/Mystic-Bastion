@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.lwjgl.opengl.Display;
 
+import engineTester.Settings;
+
 /**
  * Provides functionality for getting the values from a font file.
  * 
@@ -48,7 +50,7 @@ public class MetaFile {
 	 *            - the font file.
 	 */
 	protected MetaFile(File file) {
-		this.aspectRatio = (double) Display.getWidth() / (double) Display.getHeight();
+		this.aspectRatio = (double) Settings.WINDOW_WIDTH / (double) Settings.WINDOW_HEIGHT;
 		openFile(file);
 		loadPaddingData();
 		loadLineSizes();

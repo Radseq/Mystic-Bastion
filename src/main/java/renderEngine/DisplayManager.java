@@ -28,7 +28,7 @@ public class DisplayManager {
 		ContextAttribs attribs = new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true);
 
 		try {
-			Display.setResizable(true); // whether our window is resizable
+			//Display.setResizable(true); // whether our window is resizable
 			Display.setDisplayMode(new DisplayMode(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT));
 			Display.setVSyncEnabled(Settings.VSYNC); // whether hardware VSync
 														// is enabled

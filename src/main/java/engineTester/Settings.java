@@ -51,16 +51,16 @@ public class Settings {
 			input = new FileInputStream(gameSettingPatch);
 			properties.load(input);
 
-			WINDOW_WIDTH = Integer.parseInt(properties.getProperty("width"));
-			WINDOW_HEIGHT = Integer.parseInt(properties.getProperty("height"));
-			FPS_CAP = Integer.parseInt(properties.getProperty("fpsCap"));
-			SHOW_FPS = Boolean.parseBoolean(properties.getProperty("showFPS"));
-			FPS_REFRESH_TIME = Integer.parseInt(properties.getProperty("fpsRefreshTime"));
-			SHADOW_RENDER_DISTANCE = Integer.parseInt(properties.getProperty("shadowRenderDistance"));
-			SHADOW_MAP_SIZE = Integer.parseInt(properties.getProperty("shadowMapSize"));
-			FULL_SCREEN = Boolean.parseBoolean(properties.getProperty("fullScreen"));
-			VSYNC = Boolean.parseBoolean(properties.getProperty("vsync"));
-			ENABLE_ANTIALIASING = Boolean.parseBoolean(properties.getProperty("antialiasing"));
+			WINDOW_WIDTH 			= Integer.parseInt(properties.getProperty("width"));
+			WINDOW_HEIGHT 			= Integer.parseInt(properties.getProperty("height"));
+			FPS_CAP 				= Integer.parseInt(properties.getProperty("fpsCap"));
+			SHOW_FPS 				= Boolean.parseBoolean(properties.getProperty("showFPS"));
+			FPS_REFRESH_TIME		= Integer.parseInt(properties.getProperty("fpsRefreshTime"));
+			SHADOW_RENDER_DISTANCE 	= Integer.parseInt(properties.getProperty("shadowRenderDistance"));
+			SHADOW_MAP_SIZE 		= Integer.parseInt(properties.getProperty("shadowMapSize"));
+			FULL_SCREEN 			= Boolean.parseBoolean(properties.getProperty("fullScreen"));
+			VSYNC 					= Boolean.parseBoolean(properties.getProperty("vsync"));
+			ENABLE_ANTIALIASING 	= Boolean.parseBoolean(properties.getProperty("antialiasing"));
 			input.close();
 
 		} catch (IOException ex) {
